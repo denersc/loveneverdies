@@ -1,31 +1,49 @@
 gamestate = require "src.gamestate"
 local Enemy = require "src.Enemy"
+local Astronaut = require "src.Astronaut"
 
 local game = {}
 
+-- Creating objects --
 function game:enter()
-    enemy1 = Enemy(15,50)
-    enemy2 = Enemy(80,550)
-    playerX = 500
-    playerY = 300
+
+   -- creating enemies
+   enemy1 = Enemy(15,50)
+   enemy2 = Enemy(80,550)
+
+   -- creating astronaut
+   astronautSpeed = 250
+   astronautX = 250
+   astronautY = 450
+   astronaut = Astronaut(astronautSpeed, astronautX, astronautY)
+   
 end
 
+
+-- Function Update --
 function game:update(dt)
-    enemy1:move(dt, playerX, playerY)
-    enemy2:move(dt, playerX, playerY)
-    playerX = playerX - 1
+
+   astronaut:update(dt)
+   
+   enemy1:update(dt, astronaut:getHorizontalPosition(), astronaut:getVerticalPosition())
+   enemy2:update(dt, astronaut:getHorizontalPosition(), astronaut:getVerticalPosition())
+   
 end
 
+-- Function Draw --
 function game:draw()
-    love.graphics.setColor(255, 0, 0)
-    love.graphics.rectangle('fill', playerX, playerY, 70, 70)
-    love.graphics.setColor(255, 255, 255)
-    enemy1:draw()
-    enemy2:draw()
+
+   astronaut:draw()
+   
+   enemy1:draw()
+   enemy2:draw()
 end
 
+
+-- Leave The Game --
 function game:leave()
 
 end
+
 
 return game

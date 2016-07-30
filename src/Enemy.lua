@@ -25,7 +25,7 @@ function Enemy:distancePlayerEnemy(playerX, playerY)
     return distance
 end
 
-function Enemy:move(dt, playerX, playerY)
+function Enemy:update(dt, playerX, playerY)
     --enemy only moves if she is between the range
     local maxDist = 300
     local minDist = 100

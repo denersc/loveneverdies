@@ -1,8 +1,8 @@
 local class = require 'src.30log'
-local astronaut = class("astronaut")
+local Astronaut = class("Astronaut")
 
 -- Astronaut Constructor --
-function astronaut:init(speed, x, y, imagePath)
+function Astronaut:init(speed, x, y, imagePath)
 
    --movement
    self.speed = speed
@@ -16,56 +16,62 @@ end
 
 
 -- Set Astronaut Image --
-function astronaut:setImage(imagePath)
+function Astronaut:setImage(imagePath)
    self.image = love.graphics.newImage(imagePath)   
 end
 
 
 -- Get Astronaut Image --
-function astronaut:getImage()
+function Astronaut:getImage()
    return self.image
 end
 
 
 -- Set Astronaut Position --
-function astronaut:setPosition(x, y)
+function Astronaut:setPosition(x, y)
    self.x = x
    self.y = y   
 end
 
 
--- Get Astronaut Position --
-function astronaut:getPosition()
-   return self.x, self.y
+-- Get Astronaut Vertical Position --
+function Astronaut:getVerticalPosition()
+   return self.y
+end
+
+
+-- Get Astronaut Horizontal Position --
+function Astronaut:getHorizontalPosition()
+   return self.x
 end
 
 
 -- Set Astronaut Speed --
-function astronaut:setSpeed(speed)
+function Astronaut:setSpeed(speed)
    self.speed = speed
 end
 
 
 -- Upgrade A Movement Skill --
-function astronaut:movementUpgrade(skill)
+function Astronaut:movementUpgrade(skill)
    self.movement[skill] = self.movement[skill] + 1
 end
 
 
 -- Upgrade A Weapon Skill --
-function astronaut:weaponUpgrade()
+function Astronaut:weaponUpgrade()
    self.weapon[skill] = self.weapon[skill] + 1
 end
 
 
 -- Upgrade A Capture Skill --
-function astronaut:captureUpgrade()
+function Astronaut:captureUpgrade()
    self.capture[skill] = self.capture[skill] + 1
 end
 
 
 -- Update Function --
-function astronaut:update(dt)
+function Astronaut:update(dt)
    
    -- move to north --
    if love.keyboard.isDown('w', 'up') then
@@ -99,9 +105,9 @@ end
 
 
 -- Draw Function --
-function astronaut:draw()
+function Astronaut:draw()
    love.graphics.draw(self.image, self.x, self.y)
 end
 
 
-return astronaut
+return Astronaut
