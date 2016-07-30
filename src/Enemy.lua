@@ -16,21 +16,35 @@ function Enemy:draw()
     love.graphics.draw(self.img, self.x, self.y)
 end
 
-function Enemy:move(dt, playerX, playerY)
-    if playerX > self.x then
-        self.x = self.x + self.speed
-    else
-        self.x = self.x + self.speed
-    end
-end
-
-function distancePlayerEnemy(playerX, playerY)
+function Enemy:distancePlayerEnemy(playerX, playerY)
 
     local dX = self.x - playerX
     local dY = self.y - playerY
 
     local distance = math.sqrt( ( dX^2 ) + ( dY^2 ) )
     return distance
+end
+
+function Enemy:move(dt, playerX, playerY)
+    --enemy only moves if she is between the range
+    local maxDist = 300
+    local minDist = 100
+
+    if maxDist > self:distancePlayerEnemy(playerX, playerY) and
+       minDist < self:distancePlayerEnemy(playerX, playerY) then
+        if playerX > self.x then
+            self.x = self.x + self.speed
+        else
+            self.x = self.x - self.speed
+        end
+
+        if playerY > self.y then
+            self.y = self.y + self.speed
+        else
+            self.y = self.y - self.speed
+        end
+    end
+
 end
 
 return Enemy
