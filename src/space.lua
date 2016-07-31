@@ -3,7 +3,7 @@ local space = {}
 
 function space:enter()
 	spaceImg = love.graphics.newImage("assets/space.png")
-	ship = {x=200, y=200, rotation=90, speed=500, img=love.graphics.newImage("assets/nave/naveVoando.png")}
+	ship = {x=love.graphics:getWidth()/2, y=love.graphics:getHeight()/2, rotation=90, speed=500, img=love.graphics.newImage("assets/nave/naveVoando.png")}
 end
 
 function space:update(dt)
