@@ -3,6 +3,7 @@ local Enemy = require "src.Enemy"
 local Astronaut = require "src.Astronaut"
 local Unicorn = require "src.Unicorn"
 local Hud = require "src.Hud"
+local gameover = require "src.gameover"
 
 
 local game = {}
@@ -20,7 +21,7 @@ function game:enter()
    for i=1, 4, 1 do
       hud:addHeart()
    end
-   
+
    -- creating enemies
    enemy1 = Enemy(15,50)
    --enemy2 = Enemy(680,550)
@@ -41,7 +42,10 @@ end
 function game:update(dt)
 
    if astronaut:getLife() == 0 then
-      return
+      currentMissionNumber = nil
+      currentMissionComplete = false
+      currentMoney = 0
+      gamestate.switch(gameover)
    end
 
    astronaut:update(dt)
