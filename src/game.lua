@@ -2,6 +2,8 @@ gamestate = require "src.gamestate"
 local Enemy = require "src.Enemy"
 local Astronaut = require "src.Astronaut"
 local Unicorn = require "src.Unicorn"
+local Hud = require "src.Hud"
+
 
 local game = {}
 
@@ -13,7 +15,12 @@ function game:enter()
    backgroundx = -(love.graphics.getWidth() * 0.5)
    backgroundy = -(love.graphics.getHeight() * 0.5)
 
-
+   --creating hud
+   hud = Hud()
+   for i=1, 4, 1 do
+      hud:addHeart()
+   end
+   
    -- creating enemies
    enemy1 = Enemy(15,50)
    --enemy2 = Enemy(680,550)
@@ -52,6 +59,8 @@ function game:draw()
    --enemy2:draw()
 
    unicorn1:draw(backgroundx, backgroundy)
+
+   hud:draw()
 end
 
 
