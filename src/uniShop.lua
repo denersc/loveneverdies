@@ -1,10 +1,6 @@
 gamestate = require "src.gamestate"
 local uniShop{}
 
-currentMission = {}
-currentMissionNumber = nil
-currentMissionComplete = false
-
 function uniShop:enter()
 	if currentMissionNumber == nil then
 		currentMissionNumber = 1

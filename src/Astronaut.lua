@@ -91,7 +91,7 @@ function Astronaut:update(dt)
    -- move to north --
    if love.keyboard.isDown('w', 'up') then
 	  self.isWalking = true
-      if (self.y > 0 and backgroundy >= 0) or (backgroundy <= love.graphics.getHeight() - background:getHeight() and
+      if (self.y > 0 + self.image[self.currentImgIndex]:getHeight()/2 and backgroundy >= 0) or (backgroundy <= love.graphics.getHeight() - background:getHeight() and
               self.y >= love.graphics.getHeight() * 0.5) then
           self.y = self.y - self.speed*dt
       elseif backgroundy < 0 then
@@ -102,7 +102,7 @@ function Astronaut:update(dt)
    -- move to south --
    if love.keyboard.isDown('s', 'down') then
 	  self.isWalking = true
-      if (self.y < love.graphics.getHeight() - self.image[self.currentImgIndex]:getHeight() and backgroundy <= love.graphics.getHeight() - background:getHeight())
+      if (self.y - self.image[self.currentImgIndex]:getHeight()/2 < love.graphics.getHeight() - self.image[self.currentImgIndex]:getHeight() and backgroundy <= love.graphics.getHeight() - background:getHeight())
       or (backgroundy >= 0 and self.y <= love.graphics.getHeight() * 0.5) then
 	      self.y = self.y + self.speed*dt
       elseif backgroundy >= love.graphics.getHeight() - background:getHeight() then
@@ -114,7 +114,7 @@ function Astronaut:update(dt)
    if love.keyboard.isDown('a', 'left') then
       self.isWalking = true
       self.orientation = -1
-      if (self.x >= 0 and backgroundx >= 0) or (backgroundx <= -(background:getWidth() - love.graphics.getWidth()) and self.x >= love.graphics.getWidth() * 0.5)
+      if (self.x - self.image[self.currentImgIndex]:getWidth()/2 >= 0 and backgroundx >= 0) or (backgroundx <= -(background:getWidth() - love.graphics.getWidth()) and self.x >= love.graphics.getWidth() * 0.5)
       then
 	      self.x = self.x - self.speed*dt
       elseif backgroundx <= 0 then
@@ -126,7 +126,7 @@ function Astronaut:update(dt)
    if love.keyboard.isDown('d', 'right') then
       self.isWalking = true
       self.orientation = 1
-      if (self.x < love.graphics.getWidth() - self.image[self.currentImgIndex]:getWidth() and backgroundx <= -(background:getWidth() - love.graphics.getWidth()))
+      if (self.x < love.graphics.getWidth() - self.image[self.currentImgIndex]:getWidth()/2 and backgroundx <= -(background:getWidth() - love.graphics.getWidth()))
       or (backgroundx >= 0 and self.x <= love.graphics.getWidth() * 0.5) then
 	      self.x = self.x + self.speed*dt
       elseif backgroundx >= -(background:getWidth() - love.graphics.getWidth()) then
@@ -155,7 +155,7 @@ end
 function Astronaut:draw()
 	local xOffset = self.image[self.currentImgIndex]:getWidth()/2
 	local yOffset = self.image[self.currentImgIndex]:getHeight()/2
-   love.graphics.draw(self.image[self.currentImgIndex], self.x, self.y, 0, 0.20*self.orientation, 0.20, xOffset, yOffset)
+   love.graphics.draw(self.image[self.currentImgIndex], self.x, self.y, 0, self.orientation, 1, xOffset, yOffset)
 end
 
 

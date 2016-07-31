@@ -54,7 +54,7 @@ function Unicorn:draw(backgroundX, backgroundY)
 	local yOffset = self.img[self.currentImgIndex]:getHeight()/2
 	realX = self.x + backgroundX
 	realY = self.y + backgroundY
-	love.graphics.draw(self.img[self.currentImgIndex], realX, realY, 0, 0.15*self.orientation, 0.15, xOffset, yOffset)
+	love.graphics.draw(self.img[self.currentImgIndex], realX, realY, 0, self.orientation, 1, xOffset, yOffset)
 end
 
 function Unicorn:update(dt, astronaut)
