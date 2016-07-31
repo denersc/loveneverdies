@@ -12,8 +12,9 @@ currentMissionComplete = false
 currentMoney = 0
 currentPopularity = 0.5
 
-function love.load()
+function love.load()    
     math.randomseed(os.clock())
     gamestate.registerEvents()
+    --gamestate.switch(intro)
     gamestate.switch(menu)
 end
