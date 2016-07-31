@@ -1,9 +1,10 @@
 gamestate = require "src.gamestate"
 local game = require "src.game"
+local space = require "src.space"
 local menu = {}
 
 function menu:enter()
-    gamestate.switch(game)
+    gamestate.switch(space)
 end
 
 function menu:draw()
