@@ -11,6 +11,9 @@ function Astronaut:init(speed, x, y)
 
    --image
    self.image = love.graphics.newImage("assets/astronaut.png")
+   
+   --unicorn shit
+   self.isCarryingUnicorn = false
 
 end
 

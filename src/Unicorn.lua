@@ -4,6 +4,8 @@ local Unicorn = class('Unicorn')
 function Unicorn:init(x, y, uniColor)
 	self.x = x
 	self.y = y
+	realX = 0
+	realY = 0
 	self.canWalk = true
 	self.isWalking = false
 	self.idleTime = false
@@ -50,14 +52,22 @@ end
 function Unicorn:draw(backgroundX, backgroundY)
 	local xOffset = self.img[self.currentImgIndex]:getWidth()/2
 	local yOffset = self.img[self.currentImgIndex]:getHeight()/2
-	love.graphics.draw(self.img[self.currentImgIndex], self.x+backgroundX, self.y+backgroundY, 0, 0.15*self.orientation, 0.15, xOffset, yOffset)
+	realX = self.x + backgroundX
+	realY = self.y + backgroundY
+	love.graphics.draw(self.img[self.currentImgIndex], realX, realY, 0, 0.15*self.orientation, 0.15, xOffset, yOffset)
 end
 
-function Unicorn:update(dt, playerX, playerY)
-	self:move(dt)
-	self:checkPredator(playerX, playerY)
+function Unicorn:update(dt, astronaut)
+	if self.canWalk == true then
+		--UNICORNIO LIVRE
+		self:move(dt)
+		self:checkPredator(astronaut.x, astronaut.y)
+		self:checkCapture(astronaut)
+	else
+		--UNICORNIO PRESO
+	end
 	
-	--Animação do unicornio
+		--Animação do unicornio
 	if self.idleTime == false then
 		self.animTimer = self.animTimer + dt
 		if self.animTimer > self.animTimerMax then
@@ -66,6 +76,8 @@ function Unicorn:update(dt, playerX, playerY)
 			if self.currentImgIndex > 5 then self.currentImgIndex = 1 end
 		end
 	end
+	
+	--
 		
 end
 
@@ -106,46 +118,55 @@ end
 
 --VERIFICA SE O PLAYER ESTA NA LINHA DE VISÃO DO UNICORNIO --
 function Unicorn:checkPredator(playerX, playerY)
-	if self.direction == 0 and math.abs(self.y-playerY) < 60 and playerX-self.x > 0 and playerX-self.x < self.sightDistance then
+	if self.direction == 0 and math.abs(realY-playerY) < 60 and playerX-realX > 0 and playerX-realX < self.sightDistance then
 		--Encontrou o player no leste
 		self.direction = 2
 		self.orientation = -1
-		self.distanceFinal = 150
-		self.speed = 150
+		self.distanceFinal = 300
+		self.speed = 300
 		self.distanceCounter = 0
 		self.isWalking = true
 		self.idleTime = false
-	elseif self.direction == 1 and math.abs(self.x-playerX) < 60 and playerY-self.y > 0 and playerY-self.y < self.sightDistance then
+	elseif self.direction == 1 and math.abs(realX-playerX) < 60 and playerY-realY > 0 and playerY-realY < self.sightDistance then
 		--Encontrou o player no sul
 		self.direction = 3
-		self.distanceFinal = 150
-		self.speed = 150
+		self.distanceFinal = 300
+		self.speed = 300
 		self.distanceCounter = 0
 		self.isWalking = true
 		self.idleTime = false
-	elseif self.direction == 2 and math.abs(self.y-playerY) < 60 and playerX-self.x < 0 and self.x-playerX < self.sightDistance then
+	elseif self.direction == 2 and math.abs(realY-playerY) < 60 and playerX-realX < 0 and realX-playerX < self.sightDistance then
 		--Encontrou o player no oeste
 		self.direction = 0
 		self.orientation = 1
-		self.distanceFinal = 150
-		self.speed = 150
+		self.distanceFinal = 300
+		self.speed = 300
 		self.distanceCounter = 0
 		self.isWalking = true
 		self.idleTime = false
-	elseif self.direction == 3 and math.abs(self.x-playerX) < 60 and playerY-self.y < 0 and self.y-playerY < self.sightDistance then
+	elseif self.direction == 3 and math.abs(realX-playerX) < 60 and playerY-realY < 0 and realY-playerY < self.sightDistance then
 		--Encontrou o player no norte
 		self.direction = 1
-		self.distanceFinal = 150
-		self.speed = 150
+		self.distanceFinal = 300
+		self.speed = 300
 		self.distanceCounter = 0
 		self.isWalking = true
 		self.idleTime = false
 	end
 end
 
+function Unicorn:checkCapture(astronaut)
+	local minDistance = 120
+	if self:distancePlayerUnicorn(astronaut.x, astronaut.y) < minDistance and astronaut.isCarryingUnicorn == false then
+		self.canWalk = false
+		astronaut.isCarryingUnicorn = true
+	end
+end
+		
+
 function Unicorn:distancePlayerUnicorn(playerX, playerY)
-    local dX = self.x - playerX
-    local dY = self.y - playerY
+    local dX = realX - playerX
+    local dY = realY - playerY
     local distance = math.sqrt( ( dX^2 ) + ( dY^2 ) )
     return distance
 end
