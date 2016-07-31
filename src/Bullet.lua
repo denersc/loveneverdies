@@ -6,7 +6,11 @@ function Bullet:init(x, y, playerX, playerY, speed)
     self.y = y
     self.m = (y - playerY)/(x - playerX)
     self.speed = speed
-    self.img = love.graphics.newImage("assets/bullet.png")
+    if speed > 0 then
+        self.img = love.graphics.newImage("assets/bulletR.png")
+    else
+        self.img = love.graphics.newImage("assets/bulletL.png")
+    end
 end
 
 function Bullet:test()
