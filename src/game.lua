@@ -35,11 +35,23 @@ function game:enter()
    astronautY = love.graphics.getHeight() * 0.5
    astronaut = Astronaut(astronautSpeed, astronautX, astronautY)
 
+   --setting timer
+   self.totalTime = 60
+   self.time = 0
 end
 
 
 -- Function Update --
 function game:update(dt)
+   self.time = self.time + dt
+   if self.time >= 1 then
+       self.time = 0
+       self.totalTime = self.totalTime - 1
+   end
+
+   if self.totalTime <= 0 then
+       gamestate.switch(gameover)
+   end
 
    if astronaut:getLife() == 0 then
       currentMissionNumber = nil
@@ -68,6 +80,11 @@ function game:draw()
 
    unicorn1:draw(backgroundx, backgroundy)
 
+   love.graphics.setColor(0, 0, 0)
+   love.graphics.print("Tempo: " .. self.totalTime, 713, 37)
+   love.graphics.setColor(255, 255, 255)
+   love.graphics.print("Tempo: " .. self.totalTime, 714, 36)
+   
    hud:draw()
 end
 
