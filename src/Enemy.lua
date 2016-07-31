@@ -8,19 +8,34 @@ function Enemy:init(x, y)
     self.x = x
     self.y = y
     self.speed = 200
-    self:setSprite("assets/enemy.png")
     self.bullets = {}
     self.cooldown = 0
+    
+    --Animation Variables
+    self.img = {}
+	self.isWalking = false
+	self.orientation = 1 -- Quando em -1 espelha a sprite
+	self.currentImgIndex = 1
+	self.animTimer = 0
+	self.animTimerMax = 0.08
+    self:setSprite("assets/llama/")
 end
 
 function Enemy:setSprite(path)
-    self.img = love.graphics.newImage(path)
+	self.img[0] = love.graphics.newImage(path.. "idle.png")
+	for i=1,8 do
+		self.img[i] = love.graphics.newImage(path .. "andando/".. i .. ".png")
+    end
 end
 
 function Enemy:draw()
     self.realX = self.x + backgroundx
     self.realY = self.y + backgroundy
-    love.graphics.draw(self.img, self.realX, self.realY)
+ 	local xOffset = self.img[self.currentImgIndex]:getWidth()/2
+	local yOffset = self.img[self.currentImgIndex]:getHeight()/2
+	
+    if self.isWalking == false then love.graphics.draw(self.img[0], self.realX, self.realY, 0, self.orientation, 1, xOffset, yOffset)
+    else love.graphics.draw(self.img[self.currentImgIndex], self.realX, self.realY, 0, self.orientation, 1, xOffset, yOffset) end
     for i, bullet in ipairs(self.bullets) do
         bullet:draw()
     end
@@ -39,13 +54,18 @@ function Enemy:move(dt, playerX, playerY)
     --enemy only moves if she is between the range
     local maxDist = 400
     local minDist = 150
+    
+    self.isWalking = false
 
     if maxDist > self:distancePlayerEnemy(playerX, playerY) and
        minDist < self:distancePlayerEnemy(playerX, playerY) then
+       self.isWalking = true
         if playerX > self.realX then
             self.x = self.x + self.speed*dt
+            self.orientation = 1
         else
             self.x = self.x - self.speed*dt
+            self.orientation = -1
         end
 
         if playerY > self.realY then
@@ -88,8 +108,18 @@ function Enemy:update(dt, playerX, playerY)
 	  astronaut:setLife(astronaut:getLife() - 1)
 	  hud:removeHeart()
        end
-       
     end
+    
+    --Animação da llama
+	if self.isWalking == true then
+		self.animTimer = self.animTimer + dt
+		if self.animTimer > self.animTimerMax then
+			self.animTimer = 0
+			self.currentImgIndex = self.currentImgIndex+1
+			if self.currentImgIndex > 8 then self.currentImgIndex = 1 end
+		end
+	end
+	
 end
 
 return Enemy
