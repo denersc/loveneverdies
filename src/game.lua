@@ -12,9 +12,9 @@ local game = {}
 function game:enter()
 
    --creating background
-   background = love.graphics.newImage("assets/background.png")
-   backgroundx = -(love.graphics.getWidth() * 0.5)
-   backgroundy = -(love.graphics.getHeight() * 0.5)
+   background = love.graphics.newImage("assets/chao/chao1.png")
+   backgroundx = -100
+   backgroundy = 20
 
    --creating hud
    hud = Hud()
