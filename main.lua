@@ -1,6 +1,9 @@
 gamestate = require "src.gamestate"
 
-local menu = require "src.menu"
+menu = require "src.menu"
+space = require "src.space"
+uniShop = require "src.uniShop"
+game = require "src.game"
 
 currentMission = {}
 currentMissionNumber = nil

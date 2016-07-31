@@ -1,7 +1,8 @@
 gamestate = require "src.gamestate"
-local uniShop{}
+local uniShop = {}
 
 function uniShop:enter()
+	uniShopImg = love.graphics.newImage("assets/uniShop/balcaoFundo.png")
 	if currentMissionNumber == nil then
 		currentMissionNumber = 1
 		uniShop:assignMission()
@@ -9,11 +10,15 @@ function uniShop:enter()
 end
 
 function uniShop:update()
-	if currentMissionComplete == true and 
+	if love.keyboard.isDown("space") then
+		gamestate.switch(space)
+	end
+	if currentMissionComplete == true then end
 
 end
 
 function uniShop:draw()
+	love.graphics.draw(uniShopImg, 0, 0)
 	if currentMissionComplete == true then
 		--Desenha botão de terminar missão
 	end
