@@ -75,29 +75,42 @@ function Astronaut:update(dt)
    
    -- move to north --
    if love.keyboard.isDown('w', 'up') then
-      if self.y > 0 then
-	 self.y = self.y - self.speed*dt
+      if (self.y > 0 and backgroundy >= 0) or (backgroundy <= love.graphics.getHeight() - background:getHeight() and 
+              self.y >= love.graphics.getHeight() * 0.5) then
+          self.y = self.y - self.speed*dt
+      elseif backgroundy < 0 and self.y <= love.graphics.getHeight() * 0.5 then
+            backgroundy = backgroundy + self.speed*dt
       end
    end
    
    -- move to south --
    if love.keyboard.isDown('s', 'down') then
-      if self.y < love.graphics.getHeight() - self.image:getHeight() then
-	 self.y = self.y + self.speed*dt
-      end
-   end
-   
-   --move to east --
-   if love.keyboard.isDown('a', 'left') then
-      if self.x > 0 then
-	 self.x = self.x - self.speed*dt
+      if (self.y < love.graphics.getHeight() - self.image:getHeight() and backgroundy <= love.graphics.getHeight() - background:getHeight())
+      or (backgroundy >= 0 and self.y <= love.graphics.getHeight() * 0.5) then
+	      self.y = self.y + self.speed*dt
+      elseif backgroundy >= love.graphics.getHeight() - background:getHeight() and self.y >= love.graphics.getHeight() * 0.5 then
+          backgroundy = backgroundy - self.speed*dt
       end
    end
    
    --move to west --
+   if love.keyboard.isDown('a', 'left') then
+      print(backgroundx)
+      if (self.x >= 0 and backgroundx >= 0) or (backgroundx <= -(background:getWidth() - love.graphics.getWidth()) and self.x >= love.graphics.getWidth() * 0.5) 
+      then
+	      self.x = self.x - self.speed*dt
+      elseif backgroundx <= 0 and self.x <= love.graphics.getWidth() * 0.5 then
+          backgroundx = backgroundx + self.speed*dt
+      end
+   end
+   
+   --move to east --
    if love.keyboard.isDown('d', 'right') then
-      if self.x < love.graphics.getWidth() - self.image:getWidth() then
-	 self.x = self.x + self.speed*dt
+      if (self.x < love.graphics.getWidth() - self.image:getWidth() and backgroundx <= -(background:getWidth() - love.graphics.getWidth()))
+      or (backgroundx >= 0 and self.x <= love.graphics.getWidth() * 0.5) then
+	      self.x = self.x + self.speed*dt
+      elseif backgroundx >= -(background:getWidth() - love.graphics.getWidth()) and self.x >= love.graphics.getWidth() * 0.5 then
+          backgroundx = backgroundx - self.speed*dt
       end
    end
    
