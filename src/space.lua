@@ -4,7 +4,6 @@ local space = {}
 function space:enter()
 	spaceImg = love.graphics.newImage("assets/space.png")
 	ship = {x=200, y=200, rotation=90, speed=500, img=love.graphics.newImage("assets/nave/naveVoando.png")}
-	print(algumaVariavel)
 end
 
 function space:update(dt)
@@ -19,10 +18,6 @@ function space:update(dt)
 	end
 	if love.keyboard.isDown('d', 'right') and ship.x < love.graphics.getWidth() - ship.img:getWidth()/2 then
 		ship.x = ship.x + dt*ship.speed
-	end
-	
-	if love.keyboard.isDown('lctrl') then
-		print(ship.x .. "and" .. ship.y)
 	end
 	
 	--POUSO DO VOO

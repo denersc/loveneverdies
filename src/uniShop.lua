@@ -10,7 +10,7 @@ function uniShop:enter()
 end
 
 function uniShop:update()
-	if love.keyboard.isDown("space") then
+	if love.keyboard.isDown("lctrl") then
 		gamestate.switch(space)
 	end
 	if currentMissionComplete == true then end

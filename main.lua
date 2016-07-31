@@ -15,6 +15,5 @@ currentPopularity = 0.5
 function love.load()
     math.randomseed(os.clock())
     gamestate.registerEvents()
-    --gamestate.switch(intro)
     gamestate.switch(menu)
 end

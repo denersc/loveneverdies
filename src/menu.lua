@@ -1,7 +1,4 @@
-game = require "src.game"
 gamestate = require "src.gamestate"
-local game = require "src.game"
-local space = require "src.space"
 
 local menu = {}
 
