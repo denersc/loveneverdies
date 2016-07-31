@@ -50,6 +50,9 @@ function game:update(dt)
    end
 
    if self.totalTime <= 0 then
+       currentMissionNumber = nil
+       currentMissionComplete = false
+       currentMoney = 0
        gamestate.switch(gameover)
    end
 
@@ -84,7 +87,7 @@ function game:draw()
    love.graphics.print("Tempo: " .. self.totalTime, 713, 37)
    love.graphics.setColor(255, 255, 255)
    love.graphics.print("Tempo: " .. self.totalTime, 714, 36)
-   
+
    hud:draw()
 end
 
@@ -93,6 +96,5 @@ end
 function game:leave()
 
 end
-
 
 return game
