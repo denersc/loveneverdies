@@ -18,7 +18,7 @@ function Unicorn:init(x, y, uniColor)
 	self.currentImgIndex = 1
 	self.animTimer = 0
 	self.animTimerMax = 0.08
-	
+
 	if uniColor == 0 then
 		self.sightDistance = 500
 		self.baseSpeed = 100
@@ -46,7 +46,7 @@ function Unicorn:setSprite(path)
 	self.img = {}
 	for i=1, 6 do
 		self.img[i] = love.graphics.newImage(path .. i .. ".png")
-	end 
+	end
 end
 
 function Unicorn:draw(backgroundX, backgroundY)
@@ -66,7 +66,7 @@ function Unicorn:update(dt, astronaut)
 	else
 		--UNICORNIO PRESO
 	end
-	
+
 		--Animação do unicornio
 	if self.idleTime == false then
 		self.animTimer = self.animTimer + dt
@@ -76,9 +76,9 @@ function Unicorn:update(dt, astronaut)
 			if self.currentImgIndex > 5 then self.currentImgIndex = 1 end
 		end
 	end
-	
+
 	--
-		
+
 end
 
 --MOVIMENTA O UNICORNIO--
@@ -86,8 +86,8 @@ function Unicorn:move(dt)
 	if self.canWalk == false then return end
 	if self.isWalking == false then
 		self.idleTime = not self.idleTime
-		if self.idleTime == false then 
-			self.direction = math.random(0,3) 
+		if self.idleTime == false then
+			self.direction = math.random(0,3)
 			if self.direction == 0 then self.orientation = 1
 			elseif self.direction == 2 then self.orientation = -1
 			end
@@ -98,13 +98,13 @@ function Unicorn:move(dt)
 		self.isWalking = true
 	else
 		if self.idleTime == false then
-			if self.direction == 0 and self.x < love.graphics.getWidth() then 
+			if self.direction == 0 then
 				self.x = self.x + dt*self.speed
-			elseif self.direction == 1 and self.y < love.graphics.getHeight() then
+			elseif self.direction == 1 then
 				self.y = self.y + dt*self.speed
-			elseif self.direction == 2 and self.x > 0 then
+			elseif self.direction == 2 then
 				self.x = self.x - dt*self.speed
-			elseif self.direction == 3 and self.y > 0 then
+			elseif self.direction == 3 then
 				self.y = self.y - dt*self.speed
 			end
 		end
@@ -158,11 +158,11 @@ end
 function Unicorn:checkCapture(astronaut)
 	local minDistance = 120
 	if self:distancePlayerUnicorn(astronaut.x, astronaut.y) < minDistance and astronaut.isCarryingUnicorn == false then
-		self.canWalk = false
-		astronaut.isCarryingUnicorn = true
+		--self.canWalk = false
+		--astronaut.isCarryingUnicorn = true
 	end
 end
-		
+
 
 function Unicorn:distancePlayerUnicorn(playerX, playerY)
     local dX = realX - playerX

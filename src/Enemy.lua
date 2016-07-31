@@ -3,11 +3,11 @@ local Enemy = class('Enemy')
 local Bullet = require 'src.Bullet'
 
 function Enemy:init(x, y)
-    realX = 0
-    realY = 0
+    self.realX = 0
+    self.realY = 0
     self.x = x
     self.y = y
-    self.speed = 3
+    self.speed = 200
     self:setSprite("assets/enemy.png")
     self.bullets = {}
     self.cooldown = 0
@@ -18,9 +18,9 @@ function Enemy:setSprite(path)
 end
 
 function Enemy:draw()
-    realX = self.x + backgroundx
-    realY = self.y + backgroundy
-    love.graphics.draw(self.img, realX, realY)
+    self.realX = self.x + backgroundx
+    self.realY = self.y + backgroundy
+    love.graphics.draw(self.img, self.realX, self.realY)
     for i, bullet in ipairs(self.bullets) do
         bullet:draw()
     end
@@ -28,8 +28,8 @@ end
 
 function Enemy:distancePlayerEnemy(playerX, playerY)
 
-    local dX = realX - playerX
-    local dY = realY - playerY
+    local dX = self.realX - playerX
+    local dY = self.realY - playerY
 
     local distance = math.sqrt( ( dX^2 ) + ( dY^2 ) )
     return distance
@@ -42,28 +42,28 @@ function Enemy:move(dt, playerX, playerY)
 
     if maxDist > self:distancePlayerEnemy(playerX, playerY) and
        minDist < self:distancePlayerEnemy(playerX, playerY) then
-        if playerX > realX then
-            realX = realX + self.speed
+        if playerX > self.realX then
+            self.x = self.x + self.speed*dt
         else
-            realX = realX - self.speed
+            self.x = self.x - self.speed*dt
         end
 
-        if playerY > realY then
-            realY = realY + self.speed
+        if playerY > self.realY then
+            self.y = self.y + self.speed*dt
         else
-            realY = realY - self.speed
+            self.y = self.y - self.speed*dt
         end
     end
 end
 
 function Enemy:shoot(playerX, playerY)
     if 500 > self:distancePlayerEnemy(playerX, playerY) then
-        local m = (realY - playerY)/(realX - playerX)
-        if playerX > realX then
-            local bullet = Bullet(realX, realY, playerX, playerY, 300)
+        local m = (self.realY - playerY)/(self.realX - playerX)
+        if playerX > self.realX then
+            local bullet = Bullet(self.realX, self.realY, playerX, playerY, 300)
             table.insert(self.bullets, bullet)
         else
-            local bullet = Bullet(realX, realY, playerX, playerY, -300)
+            local bullet = Bullet(self.realX, self.realY, playerX, playerY, -300)
             table.insert(self.bullets, bullet)
         end
 
@@ -76,7 +76,8 @@ end
 function Enemy:update(dt, playerX, playerY)
     self:move(dt, playerX, playerY)
     self.cooldown = self.cooldown + dt
-    if self.cooldown >= 0.5 then
+
+    if self.cooldown >= 1 then
         self:shoot(playerX, playerY)
         self.cooldown = 0
     end
