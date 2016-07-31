@@ -1,5 +1,4 @@
-gamestate = require "src.gamestate"
-local game = require "src.game"
+game = require "src.game"
 local menu = {}
 
 function menu:enter()

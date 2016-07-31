@@ -15,11 +15,13 @@ function game:enter()
 
 
    -- creating enemies
+   enimies = {}
    enemy1 = Enemy(15,50)
    enemy2 = Enemy(680,550)
+   enemies = {enemy1, enemy2}
 
    -- creating astronaut
-   astronautSpeed = 250
+   astronautSpeed = 700
    astronautX = love.graphics.getWidth() * 0.5
    astronautY = love.graphics.getHeight() * 0.5
    astronaut = Astronaut(astronautSpeed, astronautX, astronautY)
@@ -54,5 +56,10 @@ function game:leave()
 
 end
 
+function game:updateAllEnimies(numX, numY, dt)
+    for i, enemy in ipairs(enemies) do
+        enemy:updatePosition(numX, numY, dt)
+    end
+end
 
 return game
