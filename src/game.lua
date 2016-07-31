@@ -12,7 +12,8 @@ local llamas = {}
 
 -- Creating objects --
 function game:enter()
-
+    sound = love.audio.newSource("assets/levels.ogg", "static")
+    love.audio.play(sound)
    --creating background
    background = love.graphics.newImage("assets/chao/chao1.png")
    backgroundx = -100
@@ -64,10 +65,10 @@ function game:update(dt)
 
    astronaut:update(dt)
 
-	for i,unicorn in pairs(unicorns) do 
+	for i,unicorn in pairs(unicorns) do
 		unicorn:update(dt, astronaut, background)
 	end
-	for i,llama in pairs(llamas) do 
+	for i,llama in pairs(llamas) do
 		llama:update(dt, astronaut:getHorizontalPosition() + astronaut:getImage():getWidth()/2, astronaut:getVerticalPosition() + astronaut:getImage():getHeight()/2)
 	end
 end
@@ -79,7 +80,7 @@ function game:draw()
 
    astronaut:draw()
 
-	for i,unicorn in pairs(unicorns) do 
+	for i,unicorn in pairs(unicorns) do
 		unicorn:draw(backgroundx, backgroundy)
 	end
 	for i,llama in pairs(llamas) do
