@@ -1,6 +1,14 @@
 local class = require 'src.30log'
 local Bullet = class('src.Bullet')
 
+function Bullet:checkCollision(x1,y1,w1,h1, x2,y2,w2,h2)
+   return x1 < x2+w2 and
+      x2 < x1+w1 and
+      y1 < y2+h2 and
+      y2 < y1+h1
+end
+
+
 function Bullet:init(x, y, playerX, playerY, speed)
     self.x = x
     self.y = y
@@ -23,6 +31,15 @@ function Bullet:move(dt)
 
     self.x = self.x + dist*math.cos(arc)
     self.y = self.y + dist*math.sin(arc)
+
+    collision = self:checkCollision (self.x, self.y,
+				self.img:getWidth(), self.img:getHeight(),
+				astronaut:getHorizontalPosition(),
+				astronaut:getVerticalPosition(),
+				astronaut:getImage():getWidth(),
+				astronaut:getImage():getHeight())
+    
+    return (collision)
 end
 
 function Bullet:draw()

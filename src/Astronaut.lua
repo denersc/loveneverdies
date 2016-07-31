@@ -13,14 +13,30 @@ function Astronaut:init(speed, x, y)
    self.isCarryingUnicorn = false
    
    --animation variables
-   	self.isWalking = false
-	self.animTimer = 0
-	self.animTimerMax = 0.08
-	self.orientation = 1 -- Quando em -1 espelha a sprite
-	self.currentImgIndex = 0
-	--image
-    self:setImage("assets/astronaut/")
+   self.isWalking = false
+   self.animTimer = 0
+   self.animTimerMax = 0.08
+   self.orientation = 1 -- Quando em -1 espelha a sprite
+   self.currentImgIndex = 0
+   --image
+   self:setImage("assets/astronaut/")
 
+   --life
+   maxLife = 4
+   self.life = maxLife
+	
+end
+
+
+-- Get Astronaut Life --
+function Astronaut:getLife()
+   return self.life
+end
+
+
+-- Set Astronaut Life --
+function Astronaut:setLife(life)
+   self.life = life
 end
 
 

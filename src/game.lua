@@ -40,6 +40,10 @@ end
 -- Function Update --
 function game:update(dt)
 
+   if astronaut:getLife() == 0 then
+      return
+   end
+
    astronaut:update(dt)
 
    enemy1:update(dt, astronaut:getHorizontalPosition() + astronaut:getImage():getWidth()/2, astronaut:getVerticalPosition() + astronaut:getImage():getHeight()/2)

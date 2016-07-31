@@ -82,7 +82,13 @@ function Enemy:update(dt, playerX, playerY)
         self.cooldown = 0
     end
     for i, bullet in ipairs(self.bullets) do
-        bullet:move(dt)
+       collision = bullet:move(dt)
+       if collision then
+	  table.remove(self.bullets, i)
+	  astronaut:setLife(astronaut:getLife() - 1)
+	  hud:removeHeart()
+       end
+       
     end
 end
 
