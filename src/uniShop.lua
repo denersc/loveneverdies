@@ -19,6 +19,14 @@ end
 
 function uniShop:draw()
 	love.graphics.draw(uniShopImg, 0, 0)
+	love.graphics.setColor(100, 100, 100)
+	love.graphics.print("Dia: " .. currentMissionNumber, 528, 60)
+	love.graphics.print("Azul: " .. currentMission[0], 528, 75)
+	love.graphics.print("Verde: " .. currentMission[1], 528, 90)
+	love.graphics.print("Roxo: " .. currentMission[2], 528, 105)
+	love.graphics.print("Vermelho: " .. currentMission[3], 528, 120)
+	love.graphics.print("Branco: " .. currentMission[4], 528, 135)
+	love.graphics.setColor(255, 255, 255)
 	if currentMissionComplete == true then
 		--Desenha botão de terminar missão
 	end
