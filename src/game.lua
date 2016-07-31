@@ -7,6 +7,8 @@ local gameover = require "src.gameover"
 
 
 local game = {}
+local unicorns = {}
+local llamas = {}
 
 -- Creating objects --
 function game:enter()
@@ -22,12 +24,9 @@ function game:enter()
       hud:addHeart()
    end
 
-   -- creating enemies
-   enemy1 = Enemy(15,50)
-   --enemy2 = Enemy(680,550)
-
-   -- creating a unicorn
-   unicorn1 = Unicorn(500,500,0)
+   -- gerar a população de unicornios e inimigos
+   game:populateUnicorns()
+   game:populateLlamas()
 
    -- creating astronaut
    astronautSpeed = 250
@@ -65,10 +64,12 @@ function game:update(dt)
 
    astronaut:update(dt)
 
-   enemy1:update(dt, astronaut:getHorizontalPosition() + astronaut:getImage():getWidth()/2, astronaut:getVerticalPosition() + astronaut:getImage():getHeight()/2)
-   --enemy2:update(dt, astronaut:getHorizontalPosition() + astronaut:getImage():getWidth()/2, astronaut:getVerticalPosition() + astronaut:getImage():getHeight()/2)
-
-   unicorn1:update(dt, astronaut)
+	for i,unicorn in pairs(unicorns) do 
+		unicorn:update(dt, astronaut, background)
+	end
+	for i,llama in pairs(llamas) do 
+		llama:update(dt, astronaut:getHorizontalPosition() + astronaut:getImage():getWidth()/2, astronaut:getVerticalPosition() + astronaut:getImage():getHeight()/2)
+	end
 end
 
 -- Function Draw --
@@ -78,10 +79,12 @@ function game:draw()
 
    astronaut:draw()
 
-   enemy1:draw()
-   --enemy2:draw()
-
-   unicorn1:draw(backgroundx, backgroundy)
+	for i,unicorn in pairs(unicorns) do 
+		unicorn:draw(backgroundx, backgroundy)
+	end
+	for i,llama in pairs(llamas) do
+		llama:draw()
+	end
 
    love.graphics.setColor(0, 0, 0)
    love.graphics.print("Tempo: " .. self.totalTime, 713, 37)
@@ -95,6 +98,36 @@ end
 -- Leave The Game --
 function game:leave()
 
+end
+
+function game:populateUnicorns()
+	for i=0, currentMission[0]+math.random(1,3) do
+		newUnicorn = Unicorn(math.random(0,background:getWidth()), math.random(0,background:getHeight()), 0)
+		table.insert(unicorns, newUnicorn)
+	end
+	for i=0, currentMission[1]+math.random(1,3) do
+		newUnicorn = Unicorn(math.random(0,background:getWidth()), math.random(0,background:getHeight()), 1)
+		table.insert(unicorns, newUnicorn)
+	end
+	for i=0, currentMission[2]+math.random(1,2) do
+		newUnicorn = Unicorn(math.random(0,background:getWidth()), math.random(0,background:getHeight()), 2)
+		table.insert(unicorns, newUnicorn)
+	end
+	for i=0, currentMission[3]+math.random(0,2) do
+		newUnicorn = Unicorn(math.random(0,background:getWidth()), math.random(0,background:getHeight()), 3)
+		table.insert(unicorns, newUnicorn)
+	end
+	for i=0, currentMission[4]+math.random(0,1) do
+		newUnicorn = Unicorn(math.random(0,background:getWidth()), math.random(0,background:getHeight()), 4)
+		table.insert(unicorns, newUnicorn)
+	end
+end
+
+function game:populateLlamas()
+	for i=0, 1 do
+		newLlama = Enemy(math.random(0,background:getWidth()), math.random(0,background:getHeight()))
+		table.insert(llamas, newLlama)
+	end
 end
 
 return game
