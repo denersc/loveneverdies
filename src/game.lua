@@ -12,8 +12,8 @@ function game:enter()
    background = love.graphics.newImage("assets/background.png")
    backgroundx = -(love.graphics.getWidth() * 0.5)
    backgroundy = -(love.graphics.getHeight() * 0.5)
-   
-   
+
+
    -- creating enemies
    enemy1 = Enemy(15,50)
    enemy2 = Enemy(680,550)
@@ -41,7 +41,7 @@ end
 function game:draw()
 
    love.graphics.draw(background, backgroundx, backgroundy)
-    
+
    astronaut:draw()
 
    enemy1:draw()

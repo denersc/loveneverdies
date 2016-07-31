@@ -53,17 +53,19 @@ function Enemy:move(dt, playerX, playerY)
 end
 
 function Enemy:shoot(playerX, playerY)
-    local m = (self.y - playerY)/(self.x - playerX)
-    if playerX > self.x then
-        local bullet = Bullet(self.x, self.y, playerX, playerY, 300)
-        table.insert(self.bullets, bullet)
-    else
-        local bullet = Bullet(self.x, self.y, playerX, playerY, -300)
-        table.insert(self.bullets, bullet)
-    end
+    if 500 > self:distancePlayerEnemy(playerX, playerY) then
+        local m = (self.y - playerY)/(self.x - playerX)
+        if playerX > self.x then
+            local bullet = Bullet(self.x, self.y, playerX, playerY, 300)
+            table.insert(self.bullets, bullet)
+        else
+            local bullet = Bullet(self.x, self.y, playerX, playerY, -300)
+            table.insert(self.bullets, bullet)
+        end
 
-    if table.getn(self.bullets) > 5 then
-        table.remove(self.bullets, 1)
+        if table.getn(self.bullets) > 5 then
+            table.remove(self.bullets, 1)
+        end
     end
 end
 
